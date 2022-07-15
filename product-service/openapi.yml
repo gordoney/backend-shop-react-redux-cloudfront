@@ -1,0 +1,93 @@
+openapi: 3.0.0
+components:
+  schemas:
+    Products:
+      type: array
+      items:
+        type: object
+        properties:
+          count:
+            type: number
+          price:
+            type: number
+          title:
+            type: string
+          description:
+            type: string
+          id:
+            type: string
+    Product:
+      type: object
+      properties:
+        count:
+          type: number
+        price:
+          type: number
+        title:
+          type: string
+        description:
+          type: string
+        id:
+          type: string
+    Error:
+      type: object
+      properties:
+        httpStatus:
+          type: number
+        errorType:
+          type: string
+        message:
+          type: string
+  securitySchemes: {}
+info:
+  title: shop-react-redux-cloudfront
+  description: ''
+  version: '1'
+paths:
+  /products:
+    get:
+      operationId: getProductsList
+      summary: Get products
+      responses:
+        '200':
+          description: Status 200 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        '500':
+          description: Status 500 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/products/{id}':
+    get:
+      operationId: getProductsById
+      summary: Get product by Id
+      parameters:
+        - name: id
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Status 200 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '500':
+          description: Status 500 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Status 404 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
