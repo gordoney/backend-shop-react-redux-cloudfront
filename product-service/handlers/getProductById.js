@@ -12,7 +12,7 @@ export const getProductById = async (event) => {
     const productService = new ProductService();
     const result = await productService.getProductById(event.pathParameters.id);
 
-    if (result.statusCode === 500) {
+    if (result.statusCode === 500 || result.length === 0) {
       return productNotFoundError;
     }
 
