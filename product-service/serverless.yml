@@ -6,6 +6,12 @@ provider:
   runtime: nodejs14.x
   stage: dev
   region: eu-west-1
+  environment:
+    PG_HOST: postgres.ceqrtpzrlirb.eu-west-1.rds.amazonaws.com
+    PG_PORT: 5432
+    PG_DATABASE: postgres
+    PG_USERNAME: postgres
+    PG_PASSWORD: 5DAOlEmV5Z7YT443BUub
 
 	
 plugins:
@@ -35,4 +41,12 @@ functions:
       - http:
           method: "get"
           path: "products/{id}"
+          cors: true
+
+  createProduct:
+    handler: handlers/createProduct.createProduct
+    events:
+      - http:
+          method: "post"
+          path: "products"
           cors: true

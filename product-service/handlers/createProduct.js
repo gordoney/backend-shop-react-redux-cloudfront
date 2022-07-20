@@ -4,17 +4,21 @@ import headers from '../shared/headers';
 import internalServerError from '../errors/internalServerError';
 import ProductService from '../services/productService';
 
-export const getProductsList = async (event) => {
+export const createProduct = async (event) => {
   try {
-    console.log('getProductsList');
+    console.log('createProduct, body:', event.body);
     
     const productService = new ProductService();
-    const products = await productService.getProductsList();
+    const product = JSON.parse(event.body);
+
+    const isCreated = await productService.createProduct(product);
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(products),
+      body: JSON.stringify({
+        isSuccess: isCreated
+      })
     };
   } catch (error) {
     return internalServerError;

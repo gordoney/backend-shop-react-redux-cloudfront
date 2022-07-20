@@ -1,0 +1,31 @@
+create extension if not exists "uuid-ossp";
+
+create table products (
+	id uuid primary key default uuid_generate_v4(),
+	title text NOT null,
+	description text,
+	price integer
+)
+
+create table stocks (
+	product_id uuid,
+	count integer,
+	foreign key ("product_id") references "products" ("id")
+)
+
+INSERT INTO products (title, description, price) VALUES 
+('PlayStation 3','A video game console from Sony that was introduced in late 2006.', 300),
+('PlayStation 4','Incredible games & non-stop entertainment. The PS4 console, delivering awesome gaming power, incredible entertainment and vibrant HDR technology.', 400),
+('PlayStation 4 Pro','Incredible games & non-stop entertainment. The PS4 console, delivering awesome gaming power, incredible entertainment and vibrant HDR technology.', 450),
+('PlayStation 5','The latest Sony PlayStation introduced in November 2020. Powered by an eight-core AMD Zen 2 CPU and custom AMD Radeon GPU, the PS5 is offered in two models: with and without a 4K Blu-ray drive.', 600),
+('Switch','The Nintendo Switch is a hybrid video game console, consisting of a console unit, a dock, and two Joy-Con controllers.', 400),
+('XBox Series S','The Xbox Series X has higher-end hardware and supports higher display resolutions (up to 8K resolution), along with higher frame rates and real-time ray tracing; it also has a high-speed solid-state drive (SSD) to reduce loading times.', 600);
+
+
+INSERT INTO stocks (product_id, count) VALUES 
+('415f9828-f542-4bd5-a723-a328713473db', 10),
+('3061fd99-3877-4443-bdb4-bc0ce4f8557e', 30),
+('0d616898-f9bc-46eb-8e89-36abc83de333', 55),
+('1fc2691b-6521-47d6-8196-8c34287ad210', 1),
+('f13f0a9e-d101-4e29-88cf-ad88b5f7d8e2', 60),
+('10bac37d-c9eb-4e04-9263-5143500ac21d', 3);
