@@ -1,6 +1,5 @@
 const incorrectProductDataError = {
-    statusCode: 400,
-    message: "Incorrect product data"
+    statusCode: 400
 }
 
 export default incorrectProductDataError;
