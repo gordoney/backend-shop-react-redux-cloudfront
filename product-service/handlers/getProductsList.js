@@ -1,19 +1,24 @@
 'use strict';
 
-import getProducts from './../shared/getProducts';
-import headers from './../shared/headers';
-import internalServerError from './../errors/internalServerError';
+import internalServerError from '../errors/internalServerError';
+import ProductService from '../services/productService';
 
-export const getProductsList = async () => {
+export const getProductsList = async (event) => {
   try {
-    const products = await getProducts().then(result => result);
+    console.log('getProductsList');
+    
+    const productService = new ProductService();
+    const products = await productService.getProductsList();
 
     return {
       statusCode: 200,
-      headers,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify(products),
     };
   } catch (error) {
-    return JSON.stringify(internalServerError);
+    return internalServerError;
   }
 };
