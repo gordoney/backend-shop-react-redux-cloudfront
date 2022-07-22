@@ -1,6 +1,5 @@
 'use strict';
 
-import headers from '../shared/headers';
 import internalServerError from '../errors/internalServerError';
 import ProductService from '../services/productService';
 
@@ -13,7 +12,10 @@ export const getProductsList = async (event) => {
 
     return {
       statusCode: 200,
-      headers,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify(products),
     };
   } catch (error) {
