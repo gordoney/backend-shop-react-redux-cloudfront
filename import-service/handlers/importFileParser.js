@@ -28,7 +28,7 @@ module.exports = {
 
                 await s3.deleteObject({
                     Bucket: BUCKET,
-                    Key: record.s3.object.key.replace('uploaded', 'parsed')
+                    Key: record.s3.object.key
                 }).promise();
             }
         
