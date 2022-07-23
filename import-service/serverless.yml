@@ -1,0 +1,45 @@
+service: import-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: eu-west-1
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "s3:ListBucket"
+      Resource:
+        - "arn:aws:s3:::aws-shop-react-redux-cloudfront-uploaded"
+    - Effect: "Allow"
+      Action: 
+        - "s3:*"
+      Resource:
+        - "arn:aws:s3:::aws-shop-react-redux-cloudfront-uploaded"
+
+package:
+  individually: true
+
+functions:
+  importProductsFile:
+    handler: handlers/importProductsFile.importProductsFile
+    events:
+      - http:
+          method: "get"
+          path: "import"
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                name: true
+
+  importFileParser:
+    handler: handlers/importFileParser.importFileParser
+    events:
+      - s3:
+          bucket: aws-shop-react-redux-cloudfront-uploaded
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploaded/
+          existing: true
