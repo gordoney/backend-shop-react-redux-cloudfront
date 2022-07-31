@@ -19,15 +19,19 @@ export const createProduct = async (event) => {
         return incorrectProductDataError;
     }
 
-    const isCreated = await productService.createProduct(product);
+    const { isCreated } = await productService.createProduct(product);
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
-        isSuccess: isCreated
-      })
-    };
+    if (isCreated === undefined) {
+      return internalServerError;
+    } else {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          isSuccess: isCreated
+        })
+      };
+    }
   } catch (error) {
     return internalServerError;
   }

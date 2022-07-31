@@ -44,7 +44,9 @@ class ProductService {
       const stockResult = await dbClient
         .query(`insert into stocks (product_id, count) values ('${productResult.rows[0].id}', '${product.count}')`);
       await dbClient.query('COMMIT');
-      return productResult.rowCount > 0 && stockResult.rowCount > 0;
+      return {
+        isCreated: productResult.rowCount > 0 && stockResult.rowCount > 0
+      };
     } catch (error) {
       await dbClient.query('ROLLBACK');
 
