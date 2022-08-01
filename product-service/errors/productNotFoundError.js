@@ -1,6 +1,5 @@
 const productNotFoundError = {
-    statusCode: 404,
-    message: "Can't find the product"
+    statusCode: 404
 }
 
 export default productNotFoundError;
