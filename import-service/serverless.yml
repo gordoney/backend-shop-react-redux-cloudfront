@@ -28,6 +28,18 @@ provider:
 package:
   individually: true
 
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+
 functions:
   importProductsFile:
     handler: handlers/importProductsFile.importProductsFile
@@ -40,6 +52,12 @@ functions:
             parameters:
               querystrings:
                 name: true
+          authorizer:
+            name: basicAuthorizer
+            arn: "arn:aws:lambda:eu-west-1:018052809449:function:authorization-service-dev-basicAuthorizer"
+            resultTtlInSeconds: 0
+            identitySource: method.request.header.Authorization
+            type: token
 
   importFileParser:
     handler: handlers/importFileParser.importFileParser

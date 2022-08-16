@@ -28,6 +28,6 @@ describe('getProductById', () => {
         id: '10'
       }
     });
-    expect(data).toEqual(JSON.stringify(productNotFoundError));
+    expect(data).toEqual(productNotFoundError);
   });
 });
